@@ -39,28 +39,13 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
 void encoder_update_user(uint8_t index, bool clockwise) {
     if (index == 0) { /* First encoder */
-        switch(biton32(layer_state)){
-            case 0:
-                if (clockwise){
-                    tap_code(KC_RGHT);
-                } else{
-                    tap_code(KC_LEFT);
-                }
-                break;
-            case 1:
-                if (clockwise){
-                    tap_code(KC_RGHT);
-                } else{
-                    tap_code(KC_LEFT);
-                }
-                break;
-            case 2:
-                if (clockwise) {
-                    tap_code(KC_RGHT);
-                } else {
-                    tap_code(KC_LEFT);
-                }
-                break;
-      }
-  }
+        if (clockwise) {
+            tap_code(KC_LEFT);
+            rgblight_step();
+
+        } else {
+            tap_code(KC_RGHT);
+            rgblight_step_reverse();
+        }
+    }
 };
