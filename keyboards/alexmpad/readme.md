@@ -1,6 +1,10 @@
 # AlexMPad
 
-![AlexMPad](imgur.com image replace me!)
+![AlexMPad](https://imgur.com/walYqUq)
+![AlexMPad](https://imgur.com/tBI3Hwb)
+![AlexMPad](https://imgur.com/xACrzy4)
+![AlexMPad](https://imgur.com/EE7fFGp)
+![AlexMPad](https://imgur.com/1Tx2JZm)
 
 *A short description of the keyboard/project*
 
