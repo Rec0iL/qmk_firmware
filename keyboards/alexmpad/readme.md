@@ -9,7 +9,7 @@
 *A macro Pad designed for use with Adobe Premiere and Software alike*
 
 * Keyboard Maintainer: [Rec0iL](https://github.com/Rec0iL)
-* Hardware Supported: *Hand wired to a Arduino Pro Micro*
+* Hardware Supported: *Handwired to a Arduino Pro Micro*
 * Hardware Availability: *[CNC Rotary encoder](https://de.aliexpress.com/item/1005001509739801.html?spm=a2g0s.9042311.0.0.25104c4dvnP3jL)*
 That is the only thing you need, the rest is up to you, what switches you use, or diodes...
 WS2812b is optional
