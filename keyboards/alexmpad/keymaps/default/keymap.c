@@ -20,19 +20,19 @@ bool encoder_flag = false;
 
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     [0] = LAYOUT(
-                 KC_SPC,  KC_SPC,  KC_SPC,  KC_SPC,
-            KC_SPC,  KC_SPC,  KC_SPC,  KC_SPC,
-        KC_SPC,  KC_SPC,  KC_SPC,  KC_SPC
+                 KC_SPC,  KC_W,  KC_SPC,  KC_B,
+            KC_A,  KC_S,  KC_D,  MO(2),
+        KC_SPC,  KC_SPC,  KC_SPC,  MO(1)
     ),
     [1] = LAYOUT(
-                 KC_SPC,  KC_SPC,  KC_SPC,  KC_SPC,
-            KC_SPC,  KC_SPC,  KC_SPC,  KC_SPC,
-        KC_SPC,  KC_SPC,  KC_SPC,  KC_SPC
+                 RGB_TOG,  KC_TRNS,  KC_TRNS,  RESET ,
+            KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,
+        KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS
     ),
     [2] = LAYOUT(
-                 KC_SPC,  KC_SPC,  KC_SPC,  KC_SPC,
-            KC_SPC,  KC_SPC,  KC_SPC,  KC_SPC,
-        KC_SPC,  KC_SPC,  KC_SPC,  KC_SPC
+                 KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,
+            KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,
+        KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS
     ),
 
 };
@@ -45,11 +45,12 @@ void keyboard_post_init_user(void) {
 }
 
 static uint16_t key_timer;
+
 void matrix_scan_user(void) {
     if (timer_elapsed(key_timer) > 1000) {
-        rgblight_set_effect_range(0, 17);
-        rgblight_sethsv_noeeprom(60, 60, 60); // sets the color to teal/cyan without saving
         if (encoder_flag == true) {
+            rgblight_set_effect_range(0, RGBLED_NUM);
+            rgblight_sethsv_noeeprom(60, 60, 60); // sets the color to teal/cyan without saving
             rgblight_mode_noeeprom(RGBLIGHT_MODE_BREATHING +1);
             encoder_flag=false;
         }
@@ -58,32 +59,97 @@ void matrix_scan_user(void) {
 }
 
 void encoder_update_user(uint8_t index, bool clockwise) {
-    if (abs(enco_counter) >= 17) {
+    if (abs(enco_counter) >= RGBLED_NUM-1) {
         enco_counter = 0;
     }
     if (enco_counter <0 ) {
-        enco_counter = 17;
+        enco_counter = RGBLED_NUM-1;
     }
     if (index == 0) { /* First encoder */
-        if (clockwise) {
-            enco_counter=enco_counter-0.2;
-            key_timer = timer_read();
-            tap_code(KC_LEFT);
-            rgblight_mode_noeeprom(RGBLIGHT_MODE_STATIC_LIGHT);
-            rgblight_setrgb_range(40, 0, 40, 0, abs(round(enco_counter)));
-            rgblight_setrgb_range(40, 40, 40, abs(round(enco_counter)) , 17);
-            encoder_flag = true;
-            //rgblight_step();
+            if(IS_LAYER_ON(0)){
+                if (clockwise) {
+                    tap_code(KC_LEFT);
+                    enco_counter=enco_counter-0.2;
+                    key_timer = timer_read();
+                    rgblight_mode_noeeprom(RGBLIGHT_MODE_STATIC_LIGHT);
+                    rgblight_setrgb_range(80, 80, 80, 0, abs(round(enco_counter)));//turn beginning colored
+                    rgblight_setrgb_at(0, 0, 0, abs(round(enco_counter)));//set current blue
+                    rgblight_setrgb_range(80, 80, 80, abs(round(enco_counter)+1) , RGBLED_NUM); //turn rest colored
+                    rgblight_setrgb_at(10, 10, 10, 1+abs(round(enco_counter)));//set current blue
+                    rgblight_setrgb_at(10, 10, 10, (-1)+abs(round(enco_counter)));//set current blue
+                    encoder_flag = true;
+                    //rgblight_step();
 
-        } else {
-            enco_counter=enco_counter+0.2;
-            key_timer = timer_read();
-            tap_code(KC_RGHT);
-            rgblight_mode_noeeprom(RGBLIGHT_MODE_STATIC_LIGHT);
-            rgblight_setrgb_range(0, 40, 40, 0, abs(round(enco_counter)));
-            rgblight_setrgb_range(40, 40, 40, abs(round(enco_counter)) , 17);
-            encoder_flag = true;
-            //rgblight_step_reverse();
+                } else {
+                    tap_code(KC_RGHT);
+                    enco_counter=enco_counter+0.2;
+                    key_timer = timer_read();
+                    rgblight_mode_noeeprom(RGBLIGHT_MODE_STATIC_LIGHT);
+                    rgblight_setrgb_range(80, 80, 80, 0, abs(round(enco_counter)));//turn beginning colored
+                    rgblight_setrgb_at(0, 0, 0, abs(round(enco_counter)));//set current purple
+                    rgblight_setrgb_range(80, 80, 80, abs(round(enco_counter)+1) , RGBLED_NUM); //turn rest colored
+                    rgblight_setrgb_at(10, 10, 10, 1+abs(round(enco_counter)));//set current blue
+                    rgblight_setrgb_at(10, 10, 10, (-1)+abs(round(enco_counter)));//set current blue
+                    encoder_flag = true;
+                    //rgblight_step_reverse();
+                }
+            }
+            if(IS_LAYER_ON(2)){
+                if (clockwise) {
+                    tap_code(KC_PGUP);
+                    enco_counter=enco_counter-0.2;
+                    key_timer = timer_read();
+                    rgblight_mode_noeeprom(RGBLIGHT_MODE_STATIC_LIGHT);
+                    rgblight_setrgb_range(80, 80, 80, 0, abs(round(enco_counter)));//turn beginning colored
+                    rgblight_setrgb_at(0, 0, 0, abs(round(enco_counter)));//set current blue
+                    rgblight_setrgb_range(80, 80, 80, abs(round(enco_counter)+1) , RGBLED_NUM); //turn rest colored
+                    rgblight_setrgb_at(10, 10, 10, 1+abs(round(enco_counter)));//set current blue
+                    rgblight_setrgb_at(10, 10, 10, (-1)+abs(round(enco_counter)));//set current blue
+                    encoder_flag = true;
+                    //rgblight_step();
+
+                } else {
+                    tap_code(KC_PGDN);
+                    enco_counter=enco_counter+0.2;
+                    key_timer = timer_read();
+                    rgblight_mode_noeeprom(RGBLIGHT_MODE_STATIC_LIGHT);
+                    rgblight_setrgb_range(80, 80, 80, 0, abs(round(enco_counter)));//turn beginning colored
+                    rgblight_setrgb_at(0, 0, 0, abs(round(enco_counter)));//set current purple
+                    rgblight_setrgb_range(80, 80, 80, abs(round(enco_counter)+1) , RGBLED_NUM); //turn rest colored
+                    rgblight_setrgb_at(10, 10, 10, 1+abs(round(enco_counter)));//set current blue
+                    rgblight_setrgb_at(10, 10, 10, (-1)+abs(round(enco_counter)));//set current blue
+                    encoder_flag = true;
+                    //rgblight_step_reverse();
+                }
+            }
+            if(IS_LAYER_ON(1)){
+                if (clockwise) {
+                    tap_code(KC_UP);
+                    enco_counter=enco_counter-0.2;
+                    key_timer = timer_read();
+                    rgblight_mode_noeeprom(RGBLIGHT_MODE_STATIC_LIGHT);
+                    rgblight_setrgb_range(80, 80, 80, 0, abs(round(enco_counter)));//turn beginning colored
+                    rgblight_setrgb_at(0, 0, 0, abs(round(enco_counter)));//set current blue
+                    rgblight_setrgb_range(80, 80, 80, abs(round(enco_counter)+1) , RGBLED_NUM); //turn rest colored
+                    rgblight_setrgb_at(10, 10, 10, 1+abs(round(enco_counter)));//set current blue
+                    rgblight_setrgb_at(10, 10, 10, (-1)+abs(round(enco_counter)));//set current blue
+                    encoder_flag = true;
+                    //rgblight_step();
+
+                } else {
+                    tap_code(KC_DOWN);
+                    enco_counter=enco_counter+0.2;
+                    key_timer = timer_read();
+                    rgblight_mode_noeeprom(RGBLIGHT_MODE_STATIC_LIGHT);
+                    rgblight_setrgb_range(80, 80, 80, 0, abs(round(enco_counter)));//turn beginning colored
+                    rgblight_setrgb_at(0, 0, 0, abs(round(enco_counter)));//set current purple
+                    rgblight_setrgb_range(80, 80, 80, abs(round(enco_counter)+1) , RGBLED_NUM); //turn rest colored
+                    rgblight_setrgb_at(10, 10, 10, 1+abs(round(enco_counter)));//set current blue
+                    rgblight_setrgb_at(10, 10, 10, (-1)+abs(round(enco_counter)));//set current blue
+                    encoder_flag = true;
+                    //rgblight_step_reverse();
+                }
+            }
         }
-    }
-};
+    
+}
