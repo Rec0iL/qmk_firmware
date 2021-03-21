@@ -66,6 +66,17 @@ void matrix_scan_user(void) {
     }
 }
 
+void encoder_rgb_animation(void) {
+                    key_timer = timer_read();
+                    if (rgblight_get_mode() != RGBLIGHT_MODE_STATIC_LIGHT){
+                        oldmode=rgblight_get_mode();
+                    }
+                    rgblight_mode_noeeprom(RGBLIGHT_MODE_STATIC_LIGHT);
+                    rgblight_setrgb_range(80, 80, 80, 0, RGBLED_NUM);//turn beginning colored
+                    rgblight_setrgb_at(180, 0, 0, abs(round(enco_counter)));//set current blue
+                    encoder_flag = true;
+}
+
 void encoder_update_user(uint8_t index, bool clockwise) {
     if (abs(enco_counter) >= RGBLED_NUM-1) {
         enco_counter = 0;
@@ -77,34 +88,14 @@ void encoder_update_user(uint8_t index, bool clockwise) {
             if(IS_LAYER_ON(0)){
                 if (clockwise) {
                     tap_code(KC_LEFT);
-                    enco_counter=enco_counter-0.2;
-                    key_timer = timer_read();
-                    if (rgblight_get_mode() != RGBLIGHT_MODE_STATIC_LIGHT){
-                        oldmode=rgblight_get_mode();
-                    }
-                    rgblight_mode_noeeprom(RGBLIGHT_MODE_STATIC_LIGHT);
-                    rgblight_setrgb_range(80, 80, 80, 0, abs(round(enco_counter)));//turn beginning colored
-                    rgblight_setrgb_at(0, 0, 0, abs(round(enco_counter)));//set current blue
-                    rgblight_setrgb_range(80, 80, 80, abs(round(enco_counter)+1) , RGBLED_NUM); //turn rest colored
-                    rgblight_setrgb_at(10, 10, 10, 1+abs(round(enco_counter)));//set current blue
-                    rgblight_setrgb_at(10, 10, 10, (-1)+abs(round(enco_counter)));//set current blue
-                    encoder_flag = true;
+                    enco_counter=enco_counter-0.05;
+                    encoder_rgb_animation();
                     //rgblight_step();
 
                 } else {
                     tap_code(KC_RGHT);
-                    enco_counter=enco_counter+0.2;
-                    key_timer = timer_read();
-                    if (rgblight_get_mode() != RGBLIGHT_MODE_STATIC_LIGHT){
-                        oldmode=rgblight_get_mode();
-                    }
-                    rgblight_mode_noeeprom(RGBLIGHT_MODE_STATIC_LIGHT);
-                    rgblight_setrgb_range(80, 80, 80, 0, abs(round(enco_counter)));//turn beginning colored
-                    rgblight_setrgb_at(0, 0, 0, abs(round(enco_counter)));//set current purple
-                    rgblight_setrgb_range(80, 80, 80, abs(round(enco_counter)+1) , RGBLED_NUM); //turn rest colored
-                    rgblight_setrgb_at(10, 10, 10, 1+abs(round(enco_counter)));//set current blue
-                    rgblight_setrgb_at(10, 10, 10, (-1)+abs(round(enco_counter)));//set current blue
-                    encoder_flag = true;
+                    enco_counter=enco_counter+0.05;
+                    encoder_rgb_animation();
                     //rgblight_step_reverse();
                 }
             }
@@ -112,33 +103,13 @@ void encoder_update_user(uint8_t index, bool clockwise) {
                 if (clockwise) {
                     tap_code16(S(KC_LEFT));
                     enco_counter=enco_counter-1;
-                    key_timer = timer_read();
-                    if (rgblight_get_mode() != RGBLIGHT_MODE_STATIC_LIGHT){
-                        oldmode=rgblight_get_mode();
-                    }
-                    rgblight_mode_noeeprom(RGBLIGHT_MODE_STATIC_LIGHT);
-                    rgblight_setrgb_range(80, 80, 80, 0, abs(round(enco_counter)));//turn beginning colored
-                    rgblight_setrgb_at(0, 0, 0, abs(round(enco_counter)));//set current blue
-                    rgblight_setrgb_range(80, 80, 80, abs(round(enco_counter)+1) , RGBLED_NUM); //turn rest colored
-                    rgblight_setrgb_at(10, 10, 10, 1+abs(round(enco_counter)));//set current blue
-                    rgblight_setrgb_at(10, 10, 10, (-1)+abs(round(enco_counter)));//set current blue
-                    encoder_flag = true;
+                    encoder_rgb_animation();
                     //rgblight_step();
 
                 } else {
                     tap_code16(S(KC_RGHT));
                     enco_counter=enco_counter+1;
-                    key_timer = timer_read();
-                    if (rgblight_get_mode() != RGBLIGHT_MODE_STATIC_LIGHT){
-                        oldmode=rgblight_get_mode();
-                    }
-                    rgblight_mode_noeeprom(RGBLIGHT_MODE_STATIC_LIGHT);
-                    rgblight_setrgb_range(80, 80, 80, 0, abs(round(enco_counter)));//turn beginning colored
-                    rgblight_setrgb_at(0, 0, 0, abs(round(enco_counter)));//set current purple
-                    rgblight_setrgb_range(80, 80, 80, abs(round(enco_counter)+1) , RGBLED_NUM); //turn rest colored
-                    rgblight_setrgb_at(10, 10, 10, 1+abs(round(enco_counter)));//set current blue
-                    rgblight_setrgb_at(10, 10, 10, (-1)+abs(round(enco_counter)));//set current blue
-                    encoder_flag = true;
+                    encoder_rgb_animation();
                     //rgblight_step_reverse();
                 }
             }
@@ -146,33 +117,13 @@ void encoder_update_user(uint8_t index, bool clockwise) {
                 if (clockwise) {
                     tap_code(KC_UP);
                     enco_counter=enco_counter-0.6;
-                    key_timer = timer_read();
-                    if (rgblight_get_mode() != RGBLIGHT_MODE_STATIC_LIGHT){
-                        oldmode=rgblight_get_mode();
-                    }
-                    rgblight_mode_noeeprom(RGBLIGHT_MODE_STATIC_LIGHT);
-                    rgblight_setrgb_range(80, 80, 80, 0, abs(round(enco_counter)));//turn beginning colored
-                    rgblight_setrgb_at(0, 0, 0, abs(round(enco_counter)));//set current blue
-                    rgblight_setrgb_range(80, 80, 80, abs(round(enco_counter)+1) , RGBLED_NUM); //turn rest colored
-                    rgblight_setrgb_at(10, 10, 10, 1+abs(round(enco_counter)));//set current blue
-                    rgblight_setrgb_at(10, 10, 10, (-1)+abs(round(enco_counter)));//set current blue
-                    encoder_flag = true;
+                    encoder_rgb_animation();
                     //rgblight_step();
 
                 } else {
                     tap_code(KC_DOWN);
                     enco_counter=enco_counter+0.6;
-                    key_timer = timer_read();
-                    if (rgblight_get_mode() != RGBLIGHT_MODE_STATIC_LIGHT){
-                        oldmode=rgblight_get_mode();
-                    }
-                    rgblight_mode_noeeprom(RGBLIGHT_MODE_STATIC_LIGHT);
-                    rgblight_setrgb_range(80, 80, 80, 0, abs(round(enco_counter)));//turn beginning colored
-                    rgblight_setrgb_at(0, 0, 0, abs(round(enco_counter)));//set current purple
-                    rgblight_setrgb_range(80, 80, 80, abs(round(enco_counter)+1) , RGBLED_NUM); //turn rest colored
-                    rgblight_setrgb_at(10, 10, 10, 1+abs(round(enco_counter)));//set current blue
-                    rgblight_setrgb_at(10, 10, 10, (-1)+abs(round(enco_counter)));//set current blue
-                    encoder_flag = true;
+                    encoder_rgb_animation();
                     //rgblight_step_reverse();
                 }
             }
@@ -180,33 +131,13 @@ void encoder_update_user(uint8_t index, bool clockwise) {
                 if (clockwise) {
                     tap_code16(C(KC_Y));
                     enco_counter=enco_counter-0.6;
-                    key_timer = timer_read();
-                    if (rgblight_get_mode() != RGBLIGHT_MODE_STATIC_LIGHT){
-                        oldmode=rgblight_get_mode();
-                    }
-                    rgblight_mode_noeeprom(RGBLIGHT_MODE_STATIC_LIGHT);
-                    rgblight_setrgb_range(80, 80, 80, 0, abs(round(enco_counter)));//turn beginning colored
-                    rgblight_setrgb_at(0, 0, 0, abs(round(enco_counter)));//set current blue
-                    rgblight_setrgb_range(80, 80, 80, abs(round(enco_counter)+1) , RGBLED_NUM); //turn rest colored
-                    rgblight_setrgb_at(10, 10, 10, 1+abs(round(enco_counter)));//set current blue
-                    rgblight_setrgb_at(10, 10, 10, (-1)+abs(round(enco_counter)));//set current blue
-                    encoder_flag = true;
+                    encoder_rgb_animation();
                     //rgblight_step();
 
                 } else {
                     tap_code16(C(S(KC_Y)));
                     enco_counter=enco_counter+0.6;
-                    key_timer = timer_read();
-                    if (rgblight_get_mode() != RGBLIGHT_MODE_STATIC_LIGHT){
-                        oldmode=rgblight_get_mode();
-                    }
-                    rgblight_mode_noeeprom(RGBLIGHT_MODE_STATIC_LIGHT);
-                    rgblight_setrgb_range(80, 80, 80, 0, abs(round(enco_counter)));//turn beginning colored
-                    rgblight_setrgb_at(0, 0, 0, abs(round(enco_counter)));//set current purple
-                    rgblight_setrgb_range(80, 80, 80, abs(round(enco_counter)+1) , RGBLED_NUM); //turn rest colored
-                    rgblight_setrgb_at(10, 10, 10, 1+abs(round(enco_counter)));//set current blue
-                    rgblight_setrgb_at(10, 10, 10, (-1)+abs(round(enco_counter)));//set current blue
-                    encoder_flag = true;
+                    encoder_rgb_animation();
                     //rgblight_step_reverse();
                 }
             }
