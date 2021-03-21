@@ -28,7 +28,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 /* key matrix size */
 #define MATRIX_ROWS 3
-#define MATRIX_COLS 5
+#define MATRIX_COLS 4
 
 /*
  * Keyboard Matrix Assignments
@@ -41,7 +41,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
  *
  */
 #define MATRIX_ROW_PINS { F4, F5, F6 }
-#define MATRIX_COL_PINS { F7, B1, B3, B2, B6 }
+#define MATRIX_COL_PINS { F7, B1, B3, B2}
 #define ENCODERS_PAD_A { C6 }
 #define ENCODERS_PAD_B { D7 }
 #define UNUSED_PINS
@@ -74,15 +74,15 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #define RGB_DI_PIN E6
 #ifdef RGB_DI_PIN
 #define RGBLED_NUM 17
-#    define RGBLIGHT_HUE_STEP 64
-#    define RGBLIGHT_SAT_STEP 64
-#    define RGBLIGHT_VAL_STEP 64
+#    define RGBLIGHT_HUE_STEP 8
+#    define RGBLIGHT_SAT_STEP 32
+#    define RGBLIGHT_VAL_STEP 32
 #    define RGBLIGHT_LIMIT_VAL 255 /* The maximum brightness level */
 //#    define RGBLIGHT_SLEEP  /* If defined, the RGB lighting will be switched off when the host goes to sleep */
 /*== all animations enable ==*/
-//#    define RGBLIGHT_ANIMATIONS
+#    define RGBLIGHT_ANIMATIONS
 /*== or choose animations ==*/
-#define RGBLIGHT_EFFECT_BREATHING
+//#define RGBLIGHT_EFFECT_BREATHING
 //#define RGBLIGHT_EFFECT_RAINBOW_MOOD
 //#    define RGBLIGHT_EFFECT_RAINBOW_SWIRL 2
 //#    define RGBLIGHT_EFFECT_SNAKE
