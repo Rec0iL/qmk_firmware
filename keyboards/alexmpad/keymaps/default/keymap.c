@@ -36,9 +36,14 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
         KC_TRNS,  RGB_SAI,  RGB_SAD,  RGB_RMOD
     ),
     [3] = LAYOUT( //CTRL+Z ENCODER
-                 KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,
+                 KC_TRNS,  TO(1),  TO(4),  KC_TRNS,
             KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS,
         KC_TRNS,  KC_TRNS,  KC_TRNS,  KC_TRNS
+    ),
+    [4] = LAYOUT( //CTRL+Z ENCODER
+                 MO(3),  KC_TRNS,  KC_W,  KC_TRNS,
+            MO(2),  KC_A,  KC_S,  KC_D,
+        MO(1),  KC_TRNS,  KC_TRNS,  KC_TRNS
     ),
 
 };
@@ -73,7 +78,7 @@ void encoder_rgb_animation(void) {
                     }
                     rgblight_mode_noeeprom(RGBLIGHT_MODE_STATIC_LIGHT);
                     rgblight_setrgb_range(80, 80, 80, 0, RGBLED_NUM);//turn beginning colored
-                    rgblight_setrgb_at(180, 0, 0, abs(round(enco_counter)));//set current blue
+                    rgblight_setrgb_at(180, 0, 0, abs(round(enco_counter)));//set current red
                     encoder_flag = true;
 }
 
@@ -85,7 +90,7 @@ void encoder_update_user(uint8_t index, bool clockwise) {
         enco_counter = RGBLED_NUM-1;
     }
     if (index == 0) { /* First encoder */
-            if(IS_LAYER_ON(0)){
+            if(IS_LAYER_ON(0)||IS_LAYER_ON(4)){
                 if (clockwise) {
                     tap_code(KC_LEFT);
                     enco_counter=enco_counter-0.05;
